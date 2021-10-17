@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {   
     FILE* stream;
-    freopen_s(&stream,"input2.txt","r",stdin);
+    freopen_s(&stream,"input.txt","r",stdin);
     Grammar contexts =  Grammar();
 
 

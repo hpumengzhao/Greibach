@@ -222,10 +222,36 @@ public:
 		}
 	}
 	/*消除间接左递归*/
+	//其逆DFS序
+	map<string, set<string>> Graph;
+	vector<string> orders;
+	map<string, bool> vis;
+	void Order(string u) {
+		if (vis[u]) return;
+		vis[u] = 1;
+		orders.push_back(u);
+		for (string v : Graph[u]) {
+			Order(v);
+		}
+	}
 	void delLeftRecursive(Grammar& gra) {
 		map<string, bool> has;//可以被替换的
+
+		for (string from : gra.from_set) {
+			for (string to : gra.rules[from]) {
+				vector<string> ps = gra.parse(to);
+				int siz = (int)ps.size();
+				for (int i = 0; i < siz; i++) {
+					if (ps[i][0] >= 'A' && ps[i][0] <= 'Z') {
+						Graph[from].insert(ps[i]);
+					}
+				}
+			}
+		}
+		Order(gra.S);
+		reverse(orders.begin(), orders.end());
 		//for (int steps = 1; steps <= 2; steps++) {
-			for (string from : gra.from_set) {
+			for (string from : orders) {
 				set<string> new_to;
 				set<string> need_del;
 				for (string to : gra.rules[from]) {

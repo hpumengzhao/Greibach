@@ -1,4 +1,5 @@
-S->aAbBC
+S->aAbBCD
 A->aA|B|*
 B->bcB|Cca
 C->cC|c
+D->DC|e|f

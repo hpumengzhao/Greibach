@@ -1,3 +1,3 @@
-R->Sa|a	
 Q->Rb|b
 S->Qc|c
+R->Sa|a
