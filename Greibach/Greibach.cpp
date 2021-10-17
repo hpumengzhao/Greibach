@@ -12,7 +12,7 @@ using namespace std;
 int main()
 {   
     FILE* stream;
-    freopen_s(&stream,"input2.txt","r",stdin);
+    freopen_s(&stream,"input.txt","r",stdin);
     Grammar contexts =  Grammar();
 
 
@@ -25,7 +25,7 @@ int main()
 
     GS.delDirectLeftRecursive(contexts);
     contexts.DisplayRules();
-    /*
+  
     GS.delUnused(contexts);
     cout << "\033[32m删除无用表达式成功！\033[0m" << endl;
     contexts.DisplayRules();
@@ -45,6 +45,6 @@ int main()
     GS.Solver(contexts);
     cout << "\033[32m格雷巴赫范式为: \033[0m" << endl;
     contexts.DisplayRules();
-    */
+   
     fclose(stdin);
 }
