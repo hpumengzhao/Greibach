@@ -223,7 +223,34 @@ public:
 	}
 	/*消除间接左递归*/
 	void delLeftRecursive(Grammar& gra) {
-
+		map<string, bool> has;//可以被替换的
+		//for (int steps = 1; steps <= 2; steps++) {
+			for (string from : gra.from_set) {
+				set<string> new_to;
+				set<string> need_del;
+				for (string to : gra.rules[from]) {
+					vector<string> ps = gra.parse(to);
+					if (ps[0][0] >= 'A' && ps[0][0] <= 'Z' && has[ps[0]]) {//首项是非终结符
+						need_del.insert(to);
+						for (string nxt : gra.rules[ps[0]]) {
+							string new_gen = nxt;
+							for (int i = 1; i < (int)ps.size(); i++) {
+								new_gen += ps[i];
+							}
+							new_to.insert(new_gen);
+						}
+					}
+				}
+				for (string v : need_del) {
+					gra.rules[from].erase(v);
+				}
+				for (string v : new_to) {
+					gra.rules[from].insert(v);
+				}
+				has[from] = 1;
+			}
+			delDirectLeftRecursive(gra);
+		//}
 	}
 	/*将推导式左侧第一个为非终结符的替换掉*/
 	/*拓扑排序

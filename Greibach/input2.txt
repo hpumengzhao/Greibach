@@ -1,1 +1,3 @@
-P->Pa|Pb|c|d
+R->Sa|a	
+Q->Rb|b
+S->Qc|c

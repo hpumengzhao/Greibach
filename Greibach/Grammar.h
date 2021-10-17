@@ -9,7 +9,7 @@ class Grammar {
     //从From推到To
 public:
     map<string, unordered_set<string> > rules;
-    set<string> from_set;
+    unordered_set<string> from_set;
     vector<string> input_order;
     //默认使用S作为开始变量
     string S="S";
