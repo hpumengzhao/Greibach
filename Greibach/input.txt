@@ -1,0 +1,4 @@
+S->aAbBC
+A->aA|B|*
+B->bcB|Cca
+C->cC|c
