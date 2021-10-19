@@ -260,7 +260,9 @@ public:
 						need_del.insert(to);
 						for (string nxt : gra.rules[ps[0]]) {
 							string new_gen = nxt;
+							if (nxt == "*") new_gen = "";
 							for (int i = 1; i < (int)ps.size(); i++) {
+								if (ps[i] == "*") continue;
 								new_gen += ps[i];
 							}
 							new_to.insert(new_gen);
