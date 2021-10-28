@@ -84,27 +84,27 @@ public:
     /*
     * A1bB1B2->{A1,b,B1,B2}
     */
-    vector<string> parse(string to) {
-        vector<string>  res;
-        string now = "";
-        for (char c : to) {
-            if (c >= '0' && c <= '9' ||c=='\'') {
+};
+vector<string> parse(string to) {
+    vector<string>  res;
+    string now = "";
+    for (char c : to) {
+        if (c >= '0' && c <= '9' || c == '\'') {
+            now += c;
+        }
+        else {
+            if (now.size() == 0) {
                 now += c;
             }
             else {
-                if (now.size() == 0) {
-                    now += c;
-                }
-                else {
-                    res.push_back(now);
-                    now = "";
-                    now += c;
-                }
+                res.push_back(now);
+                now = "";
+                now += c;
             }
         }
-        if (now.size()) {
-            res.push_back(now);
-        }
-        return res;
     }
-};
+    if (now.size()) {
+        res.push_back(now);
+    }
+    return res;
+}

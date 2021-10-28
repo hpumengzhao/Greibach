@@ -6,13 +6,14 @@
 #include<map>
 #include<cassert>
 #include"GreibachSolver.h"
+#include"NPDAsolver.h"
 #include"Grammar.h"
 using namespace std;
 //范式
 int main()
 {   
     FILE* stream;
-    freopen_s(&stream,"input.txt","r",stdin);
+    freopen_s(&stream,"input3.txt","r",stdin);
     Grammar contexts =  Grammar();
 
 
@@ -47,6 +48,10 @@ int main()
     cout << "\033[32m格雷巴赫范式为: \033[0m" << endl;
     contexts.DisplayRules();
     
-   
+
+    NPDA NPDASolver =  NPDA(contexts);
+    cout << "\033[32mNPDA为: \033[0m" << endl;
+    NPDASolver.Display();
     fclose(stdin);
+
 }

@@ -16,7 +16,7 @@ public:
 		}
 		used[u] = 1;
 		for (string v : gra.rules[u]) {
-			vector<string> ps = gra.parse(v);
+			vector<string> ps = parse(v);
 			for (string v : ps) {
 				if (v[0] >= 'A' && v[0] <= 'Z') {
 					DFS_Used(v);
@@ -52,7 +52,7 @@ public:
 	void delEpsilon(Grammar& gra) {
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps.size() == 1) {
 					if (ps[0] == "*" || (ps[0][0] >= 'A' && ps[0][0] <= 'Z')) {
 						inv_graph[ps[0]].insert(from);
@@ -65,7 +65,7 @@ public:
 		//二进制枚举替换
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				vector<int> id;//存储产生式可空变量的位置
 				int siz = (int)ps.size();
 				for (int i = 0; i < siz; i++) {
@@ -126,7 +126,7 @@ public:
 	void delSingle(Grammar& gra) {
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps.size() == 1 && gra.from_set.find(ps[0]) != gra.from_set.end()) {//寻找到from可以推导出的单一产生式
 					top_graph[ps[0]].insert(from);
 					ind[from]++;
@@ -149,7 +149,7 @@ public:
 			set<string> add_tmp;
 			set<string> del;
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps.size() == 1 && gra.from_set.find(ps[0]) != gra.from_set.end()) {
 					del.insert(ps[0]);
 					for (string v : gra.rules[ps[0]]) {
@@ -192,7 +192,7 @@ public:
 			vector<string> no_leftR;//存放不存在左递归的产生式
 			vector<string> yes_leftR;
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps[0] == from) {//存在左递归
 					yes_leftR.push_back(to);
 				}
@@ -209,7 +209,7 @@ public:
 				}
 				gra.rules[new_from].insert("*");
 				for (string v : yes_leftR) {
-					vector<string> pss = gra.parse(v);
+					vector<string> pss = parse(v);
 					string temp = "";
 					int siz = (int)pss.size();
 					for (int i = 1; i < siz; i++) {
@@ -239,7 +239,7 @@ public:
 
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				int siz = (int)ps.size();
 				for (int i = 0; i < siz; i++) {
 					if (ps[i][0] >= 'A' && ps[i][0] <= 'Z') {
@@ -255,7 +255,7 @@ public:
 				set<string> new_to;
 				set<string> need_del;
 				for (string to : gra.rules[from]) {
-					vector<string> ps = gra.parse(to);
+					vector<string> ps = parse(to);
 					if (ps[0][0] >= 'A' && ps[0][0] <= 'Z' && has[ps[0]]) {//首项是非终结符
 						need_del.insert(to);
 						for (string nxt : gra.rules[ps[0]]) {
@@ -296,7 +296,7 @@ public:
 	void delFirst(Grammar& gra) {
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps[0][0] >= 'A' && ps[0][0] <= 'Z') {
 					top_graph_2[ps[0]].insert(from);
 					ind2[from]++;
@@ -316,7 +316,7 @@ public:
 			set<string> add_tmp;//新产生的式子
 			set<string> del;
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				if (ps[0][0] >= 'A' && ps[0][0] <= 'Z') {//替换
 					del.insert(to);
 					string p = ps[0];
@@ -362,7 +362,7 @@ public:
 		set<string> add_new; 
 		for (string from : gra.from_set) {
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				int siz = (int)ps.size();
 				for (int i = 1; i < siz; i++) {
 					if (ps[i][0] >= 'a' && ps[i][0] <= 'z') {
@@ -396,7 +396,7 @@ public:
 		for (string from : gra.from_set) {
 			set<string> tmp;
 			for (string to : gra.rules[from]) {
-				vector<string> ps = gra.parse(to);
+				vector<string> ps = parse(to);
 				string now = "";
 				int siz = (int)ps.size();
 				now += ps[0];
