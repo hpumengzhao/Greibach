@@ -58,19 +58,40 @@ public:
 			cout << endl;
 		}
 	}
-
-
-	
-	bool Accepted(string& s) {
+	string to_string(char c) {
+		string res = "";
+		res += c;
+		return res;
+	}
+	bool DFS(string status,int id,stack<string> now_stack,const int& len,const string& s) {//当前状态,字符串下标,
+		//cout << status << ' ' << id << ' ' << len << ' ' << s << endl;
+		if (status == "q1"&&id==len&&now_stack.top()=="z") return 1;
+		if (id == len) return 0;
+		bool jud = 0;
+		string ss;
+		if (id == -1) ss = "*";
+		else ss = to_string(s[id]);
+		/*搜索下面的状态*/
+		//cout << status << ' ' << ss << ' ' << now_stack.top() << endl;
+		for (auto v : trans_rules[{status, { ss,now_stack.top() }}]) {
+			string nxt_status = v.first;
+			string replaces = v.second;
+			stack<string> new_stack = now_stack;
+			new_stack.pop();
+			vector<string> ps = parse(replaces);
+			int siz = (int)ps.size();
+			for (int i = siz - 1; i >= 0; --i) {
+				if (ps[i] != "*") new_stack.push(ps[i]);
+			}
+			jud|=DFS(nxt_status, id + 1, new_stack, len, s);
+		}
+		return jud;
+	}
+	bool Accepted(string s) {
 		stack<string> sta;
 		sta.push("z");
 		string now_status = "q0";
-		for (char c : s) {
-			string temp = ""; temp += c;
-			string top = sta.top();
-			if (trans_rules[{now_status, { temp,top }}].size()) {
-
-			}
-		}
+		int siz = (int)s.size();
+		return DFS(now_status, -1, sta, siz,s);
 	}
 };

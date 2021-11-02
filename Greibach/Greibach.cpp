@@ -13,7 +13,7 @@ using namespace std;
 int main()
 {   
     FILE* stream;
-    freopen_s(&stream,"input3.txt","r",stdin);
+    freopen_s(&stream,"input.txt","r",stdin);
     Grammar contexts =  Grammar();
 
 
@@ -52,6 +52,15 @@ int main()
     NPDA NPDASolver =  NPDA(contexts);
     cout << "\033[32mNPDA为: \033[0m" << endl;
     NPDASolver.Display();
+
+    //cout << NPDASolver.Accepted("aabbcccddccc") << endl;
+    bool res = NPDASolver.Accepted("aabbcccddccc");
+    if (res) {
+        cout << "\033[32mAccepted!!\033[0m" << endl;
+    }
+    else {
+        cout << "\033[31mRejected!!\033[0m" << endl;
+    }
     fclose(stdin);
 
 }
